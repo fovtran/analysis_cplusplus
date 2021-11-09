@@ -1,13 +1,15 @@
-Using Cardan’s method to solve Peng-Robinson equation
-may 5, 2018 by ali gabriel lara
-Let’s assume a typical problem in Chemical Engineering Thermodynamics to show how to perform this kind of calculations using Python
+# Using Cardan’s method to solve Peng-Robinson equation
+## may 5, 2018 by ali gabriel lara
+
+# - Let’s assume a typical problem in Chemical Engineering Thermodynamics to show how to perform this kind of calculations using Python
 import numpy as np
 
-PROBLEM STATEMENT¶
-Assuming that n-octane obeys the Peng-Robinson equation of state calculate the molar volumes of saturated liquid and saturated vapor at 427.85 K and 0.215 MPa.
+# PROBLEM STATEMENT
+## Assuming that n-octane obeys the Peng-Robinson equation of state
+## calculate the molar volumes of saturated liquid and saturated vapor at 427.85 K and 0.215 MPa.
 
-PENG-ROBINSON EQUATION¶
-This model is described for this set of equation
+## PENG-ROBINSON EQUATION
+## This model is described for this set of equation
 
 \displaystyle \begin{aligned} & \alpha = \left[1+ \left( 0.37464 +1.54226 \omega -0.26992 \omega^2\right) \left( 1 -\sqrt{Tr} \right)\right]^ 2 \\ & A = 0.45724\left(\frac{P_r}{T_r^2}\right)\alpha \\ & B = 0.07780 \left(\frac{P_r}{T_r}\right) \\ & Z^3 + (B-1) Z^2 + (A - 2B - 3B^2)Z - AB + B^2 + B^ 3 = 0 \end{aligned}
 
@@ -31,8 +33,9 @@ coef[0] = 1
 coef[1] = B - 1
 coef[2] = A - 2 * B - 3 * B**2
 coef[3] = - A * B + B**2 + B**3
-CARDAN’S METHOD¶
-To determine the roots of a cubic equation. The cubic equation of state can be expressed as:
+
+## CARDAN’S METHOD
+## To determine the roots of a cubic equation. The cubic equation of state can be expressed as:
 
 Z^3 + \alpha Z^2 + \beta Z + \gamma
 

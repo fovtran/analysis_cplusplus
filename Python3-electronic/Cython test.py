@@ -1,10 +1,4 @@
 # -*- coding: utf-8 -*-
-"""
-Created on Mon Jul  4 17:47:24 2016
-
-@author: Diseño16
-"""
-
 import random
 from cymem.cymem cimport Pool
 
@@ -50,7 +44,7 @@ def compute_F(World w):
     cdef Point s
     cdef Point F
     for i in range(w.N):
-        # Set all forces to zero. 
+        # Set all forces to zero.
         w.F[i].x = 0
         w.F[i].y = 0
         for j in range(i+1, w.N):

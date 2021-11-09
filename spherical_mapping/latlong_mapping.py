@@ -1,0 +1,9 @@
+dlong := pi*(3-sqrt(5))  /* ~2.39996323 */
+dz    := 2.0/N
+long := 0
+z    := 1 - dz/2
+for k := 0 .. N-1
+    r    := sqrt(1-z*z)
+    node[k] := (cos(long)*r, sin(long)*r, z)
+    z    := z - dz
+    long := long + dlong

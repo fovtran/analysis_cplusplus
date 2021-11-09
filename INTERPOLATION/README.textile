@@ -1,0 +1,31 @@
+h1. csv2SQL
+
+By Diego Cadogan, Mostly self motivated development for my clients.
+
+CSV2SQL is a Strong threaded csv file reader and SQL inserter
+
+h2. Getting Started
+
+* "Install":http://wiki.github.com/spheric/csv2sql
+* Read up about its "Usage":http://wiki.github.com/spheric/csv2sql usage 
+* Constantly improving threading class rewritten every week.
+
+h2. Runtime Dependencies
+
+* Python 2.6+:
+* python-pymongo: Not implemented
+* python-sqlite3: Inserts are in Alpha state yet
+* bsddb: Default database for logging, ALPHA too.
+
+h2. Developer Dependencies
+
+* MongoDB: Backend (DB)
+* Sqlite3: Backend (DB)
+* BerkeleyDB: Nicer Backend (DB)
+* MySQL: Deprecated (DB)
+* Python SimpleJson, Threading, Timers/
+
+h2. License
+
+BSD License so far.
+See LICENSE.

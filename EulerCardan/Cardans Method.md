@@ -1,8 +1,7 @@
 # Using Cardan’s method to solve Peng-Robinson equation
 ## may 5, 2018 by ali gabriel lara
-
-# - Let’s assume a typical problem in Chemical Engineering Thermodynamics to show how to perform this kind of calculations using Python
-import numpy as np
+# - Let’s assume a typical problem in Chemical Engineering Thermodynamics
+# - to show how to perform this kind of calculations using Python
 
 # PROBLEM STATEMENT
 ## Assuming that n-octane obeys the Peng-Robinson equation of state
@@ -13,6 +12,7 @@ import numpy as np
 
 \displaystyle \begin{aligned} & \alpha = \left[1+ \left( 0.37464 +1.54226 \omega -0.26992 \omega^2\right) \left( 1 -\sqrt{Tr} \right)\right]^ 2 \\ & A = 0.45724\left(\frac{P_r}{T_r^2}\right)\alpha \\ & B = 0.07780 \left(\frac{P_r}{T_r}\right) \\ & Z^3 + (B-1) Z^2 + (A - 2B - 3B^2)Z - AB + B^2 + B^ 3 = 0 \end{aligned}
 
+import numpy as np
 # Data from the problem
 T = 427.85    # Kelvin degree
 P = 0.215e6   # Pressure in Pa
@@ -20,7 +20,8 @@ Tc = 568.7    # Critical temperature, K
 Pc = 24.90e5  # Critical pressure, Pa
 omega = 0.4   # acentric factor
 R = 8.314     # universal gas constant in (Pa m**3)/(mol K)
-Let’s calculate the EOS parameters to build its Z-cubic polynomic
+
+# Let’s calculate the EOS parameters to build its Z-cubic polynomic
 Pr = P / Pc
 Tr = T / Tc
 alpha =  ((1 + ( 0.37464 + 1.54226 * omega - 0.26992 * omega**2)
@@ -35,7 +36,8 @@ coef[2] = A - 2 * B - 3 * B**2
 coef[3] = - A * B + B**2 + B**3
 
 ## CARDAN’S METHOD
-## To determine the roots of a cubic equation. The cubic equation of state can be expressed as:
+## To determine the roots of a cubic equation.
+## The cubic equation of state can be expressed as:
 
 Z^3 + \alpha Z^2 + \beta Z + \gamma
 
@@ -62,7 +64,7 @@ If D < 0 , there are three unqueal real roots.
 where
 \displaystyle \begin{aligned} & \cos \theta = \frac{{-q}}{2} \left( \frac{-27}{p^3} \right)^{1/2} \\ & r = \left( \frac{-p^3}{27} \right)^{1/2} \end{aligned}
 
-This method can be written in a function like this one
+# This method can be written in a function like this one
 def cardan(coef):
 
     aalpha = coef[1]
@@ -93,7 +95,8 @@ def cardan(coef):
             Z = [Z1, Z2, Z3]
 
     return Z
-Now, let’s get the solution of the cubic polynomic
+
+# Now, let’s get the solution of the cubic polynomic
 Zcardan = cardan(coef)
 
 # Results
@@ -104,11 +107,14 @@ if np.size(Zcardan) == 3:
     print('Using Cardan''s method')
     print('The volume of n-octane saturated liquid = {:.3e} m**3/mol'.format(vf))
     print('The volume of n-octane saturated vapour = {:.3e} m**3/mol'.format(vg))
-Using Cardans method
-The volume of n-octane saturated liquid = 2.007e-04 m**3/mol
-The volume of n-octane saturated vapour = 1.514e-02 m**3/mol
-USING BUILT-IN FUNCTION “NUMPY.ROOTS”¶
-This is very straigth-forward method
+
+# Using Cardans method
+- The volume of n-octane saturated liquid = 2.007e-04 m**3/mol
+- The volume of n-octane saturated vapour = 1.514e-02 m**3/mol
+
+# USING BUILT-IN FUNCTION "NUMPY.ROOTS"
+- This is very straigth-forward method
+
 # Using Python functions
 ZPR = np.roots(coef)
 ZPR_real = ZPR[np.isreal(ZPR).real]
@@ -117,6 +123,7 @@ vPRg = max(ZPR_real ) * R * T / P
 print('Using built-in functions')
 print('The volume of n-octane saturated liquid = {:.3e} m**3/mol'.format(vPRf))
 print('The volume of n-octane saturated vapour = {:.3e} m**3/mol'.format(vPRg))
-Using built-in functions
-The volume of n-octane saturated liquid = 2.007e-04 m**3/mol
-The volume of n-octane saturated vapour = 1.514e-02 m**3/mol
+
+# Using built-in functions
+- The volume of n-octane saturated liquid = 2.007e-04 m**3/mol
+- The volume of n-octane saturated vapour = 1.514e-02 m**3/mol

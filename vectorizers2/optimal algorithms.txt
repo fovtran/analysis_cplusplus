@@ -1,7 +1,0 @@
-absolute value
-addition/subtraction
-computing average value
-comparision
-maximum/minimum
-negation
-sum of absolute difference

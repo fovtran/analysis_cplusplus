@@ -1,0 +1,63 @@
+reg add HKCU\SOFTWARE\Microsoft\.NETFramework /v AltJit /t REG_SZ /d "*" /f /reg:64 > NUL
+reg add HKCU\SOFTWARE\Microsoft\.NETFramework /v FeatureSIMD /t REG_DWORD /d 1 /f /reg:64 > NUL
+
+set COMPLUS_AltJit=*
+set COMPLUS_FeatureSIMD=1
+start myapp.exe
+
+using System;
+using System.Windows;
+// Added for SIMD
+using System.Numerics;
+ 
+namespace SIMDWpfApplication1
+{
+    /// <summary>
+    /// Interaction logic for App.xaml
+    /// </summary>
+    public partial class App : Application
+    {
+        // Code required to get SIMD working with RyuJIT CTP4
+        static Vector<float> dummy;
+ 
+        // Code required to get SIMD working with RyuJIT CTP4
+        static App() { dummy = Vector<float>.One; }
+ 
+        protected override void OnStartup(StartupEventArgs e)
+        {
+            base.OnStartup(e);
+ 
+            // Check whether optimized SIMD intrinsics will be generated
+            if (!VectorMath.IsHardwareAccelerated)
+            {
+                MessageBox.Show("I'm sorry. The JIT won't generate SIMD instructions.", "Error");
+                Environment.Exit(1);
+            }
+        } 
+    }
+}
+
+using System;
+using System.Windows;
+using System.Windows.Controls;
+// Added for SIMD
+using System.Numerics;
+ 
+namespace SIMDWpfApplication1
+{
+    public partial class MainWindow : Window
+    {
+        public MainWindow()
+        {
+            InitializeComponent();
+        }
+ 
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            var vector1 = new Vector3f(x: 5f, y: 5f, z: 5f);
+            var vector2 = new Vector3f(x: 1f, y: 1f, z: 1f);
+            var finalVector = vector1 + vector2;
+            (sender as Button).Content = finalVector.X.ToString();
+        }
+    }
+}

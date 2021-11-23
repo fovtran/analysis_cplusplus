@@ -1,7 +1,5 @@
 // This code is released in public domain
-
 #include <Eigen/Geometry>
-
 // Given two sets of 3D points, find the rotation + translation + scale
 // which best maps the first set to the second.
 // Source: http://en.wikipedia.org/wiki/Kabsch_algorithm

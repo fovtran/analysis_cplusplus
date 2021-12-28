@@ -1,0 +1,60 @@
+
+Getting Started
+
+Before you start writing the first line of code for your file monitoring system, you should familiarize yourself with FileSystemWatcher class.
+
+FileSystemWatcher listens to the file system change notifications and raises events when a directory, or file in a directory, changes. The component can watch files on a local computer, a network drive, or a remote computer.
+
+The FileSystemWatcher provides us with the event handlers to capture events like renamed, deleted, created and changed.
+
+Let us start by creating a windows application in Visual Studio .Net. Add a FolderBrowserDialog  control to the form to get the folder path for which file monitoring is required. Now add a button to start the file monitoring. Add a click event handler to the button by double-clicking the button.
+
+FileSystemWatcher
+
+Instantiate the FileSystemWatcher class by creating a object. Set the directory to watch by setting the path property.
+
+FileSystemWatcher fwatcher = new FileSystemWatcher();
+
+fwatcher.Path = txtFolder.Text;
+
+Type of changes to watch is set by the property NotifyFilter.
+
+
+fwatcher.NotifyFilter=NotifyFilters.LastAccess | NotifyFilters.LastWrite | NotifyFilters.FileName;
+
+
+Now the FileSystemwatcher is set to watch for changes in LastWrite, LastAccess and FileName.
+
+Add event handlers to capture events like Changed, Created, Deleted and Renamed.
+
+fwatcher.Changed += new FileSystemEventHandler(Changed);
+fwatcher.Created += new FileSystemEventHandler(FileCreated);
+fwatcher.Deleted += new FileSystemEventHandler(Deleted);
+fwatcher.Renamed += new RenamedEventHandler(Renamed);
+
+
+Files of a specific extension (like *.txt) can be watched by setting the Filter property to *.txt. This may be useful when you want to watch over the source code of a production box expect the log files. So that you can filter your watch by extensions.
+
+The FileSystemWatcher can be programmatically controlled by enabling and disabling it using the EnableRaisingEvents property.
+
+fwatcher.Filter = "*.txt";
+fwatcher.EnableRaisingEvents = true;
+
+
+Capturing the change
+
+If we want to notify the administrator, that a file has been changed, we would require the name of the file to which the change has been made. To get the name of the file we use the event handler argument FileSystemEventArgs.
+
+private void Changed(object sender, FileSystemEventArgs e)
+
+{
+
+    lblMessage.Text = e.FullPath.ToString() + " is changed!";
+
+}
+
+FullPath property of the FileSystemEventArgs gives the full path of the file to which the change has happened. This can be displayed in a label to notify the administrator.
+
+Conclusion
+
+FileSystemWatcher can be used to watch over files that contains sensitive information or source code that needs to be monitored for unauthorized changes. Although we can use Windows APIs to monitor a folder, using FileSystemWatcher class is simple and easy. 

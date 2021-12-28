@@ -1,0 +1,39 @@
+
+int count = 0;
+for (int i = 0; i < 10; ++i)
+{
+count++;
+}
+std::cout << count;
+If we compile this code to an executable file, we’ll see this in the disassembler:
+
+004113DE loc_4113DE:
+004113DE     mov     eax, [ebp-14h]
+004113E1     add     eax, 1
+004113E4     mov     [ebp-14h], eax
+004113E7 loc_4113E7:
+004113E7     cmp     [ebp-14h], 0Ah
+004113EB     jge     short loc_4113F8
+004113ED     mov     eax, [ebp-8]
+004113F0     add     eax, 1
+004113F3     mov     [ebp-8], eax
+004113F6     jmp     short loc_4113DE
+004113F8 loc_4113F8:
+004113F8     mov     ecx, ds:?cout@std
+004113FE     push    eax
+00411400     call    ds:basic_ostream@operator<<(int)
+00411404     xor     eax, eax
+00411406     retn
+
+
+As we can see, the regular cycle turned into assembly code with comparisons and jumps. Notice that the assembly code doesn’t use the regular assembly loop with the counter in the ecx register. In addition, local variables here are referred to as [ebp-14h] and [ebp-8] accordingly.
+
+Let’s see what will happen if we compile this code using the release build:
+
+00401000 main     proc near
+00401000     mov     ecx, ds:?cout@std
+00401006     push    0Ah
+00401008     call    ds:basic_ostream@operator<<(int)
+0040100E     xor     eax, eax
+00401010     retn
+00401010 main     endp
